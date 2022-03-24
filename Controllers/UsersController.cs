@@ -5,15 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController :ControllerBase
+
+    public class UsersController :BaseApiController
     {
         private readonly ILogger<UsersController> _logger;
         private readonly DataContext _datacontext;
@@ -24,13 +24,14 @@ namespace API.Controllers
             _datacontext=datacontext;
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task <ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
         var users=await _datacontext.Users.ToListAsync();
             return users;
         }
+        [Authorize]
         [HttpGet("{id}")]
          public ActionResult<AppUser> GetUser(int id)
         {
