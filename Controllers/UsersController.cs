@@ -47,7 +47,7 @@ namespace API.Controllers
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
             return Ok(users);
         }
-        [Authorize(Roles ="Member")]
+      //  [Authorize(Roles ="Member")]
         [HttpGet("{username}",Name ="GetUser")]
         public async Task<ActionResult<MemberDto>> GetUserAsync(string username)
       =>
